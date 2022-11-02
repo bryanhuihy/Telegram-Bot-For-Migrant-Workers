@@ -9,7 +9,6 @@ app = Flask(__name__)
 @app.route('/',methods=['POST'])
 def index():
     data = request.get_json()
-    
     print(data)
 #     source_currency = data['queryResult']['parameters']['unit-currency']['currency']
 #     amount = data['queryResult']['parameters']['unit-currency']['amount']
