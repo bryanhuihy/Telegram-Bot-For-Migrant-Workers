@@ -22,7 +22,7 @@ def index():
     
     if 'currency-from' in data['queryResult']['parameters']:
         source_currency = data['queryResult']['parameters']['currency-from']
-        source_currency = round(source_currency,2)
+        source_currency = round(float(source_currency),2)
         amount = data['queryResult']['parameters']['amount']
         target_currency = data['queryResult']['parameters']['currency-to']
         cf = fetch_conversion_factor(source_currency,target_currency, amount)
