@@ -1,7 +1,7 @@
 # import os
 # import telebot
 # from dotenv import load_dotenv
-from flask import Flask,request
+from flask import Flask, request, jsonify
 # import requests
 
 app = Flask(__name__)
@@ -9,25 +9,19 @@ app = Flask(__name__)
 @app.route('/',methods=['POST'])
 def index():
     data = request.get_json()
-    print(data)
-#     source_currency = data['queryResult']['parameters']['unit-currency']['currency']
-#     amount = data['queryResult']['parameters']['unit-currency']['amount']
-#     target_currency = data['queryResult']['parameters']['currency-name']
+    monthly_basic_pay = data['queryResult']['parameters']['number']
 
 
-#     cf = fetch_conversion_factor(source_currency,target_currency)
-#     final_amount = amount * cf
-#     final_amount = round(final_amount,2)
-#     response = {
-#         'fulfillmentText':"{} {} is {} {}".format(amount,source_currency,final_amount,target_currency)
-#     }
-#     return jsonify(response)
+    ot_pay = ot_calculation(monthly_basic_pay)
+    response = {
+        'fulfillmentText':"Your hourly OT pay should be {}".format(ot_pay)
+    }
+    return jsonify(response)
 
-# def ot_calculation(message):
-#     monthly_basic_pay = message.text
-#     hourly_basic_pay = (12 * float(monthly_basic_pay)) / (52 * 44)
-#     hourly_ot_pay = hourly_basic_pay * 1.5
-#     return(hourly_ot_pay)
+def ot_calculation(monthly_basic_pay):
+    hourly_basic_pay = (12 * float(monthly_basic_pay)) / (52 * 44)
+    hourly_ot_pay = hourly_basic_pay * 1.5
+    return(hourly_ot_pay)
 
 # def fetch_conversion_factor(source,target):
 
