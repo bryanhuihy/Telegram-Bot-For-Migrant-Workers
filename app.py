@@ -10,14 +10,14 @@ def home():
 @app.route('/',methods=['POST'])
 def index():
     data = request.get_json()
-    if data['queryResult']['parameters']['number']:
+    if 'number' in data['queryResult']['parameters']:
         monthly_basic_pay = data['queryResult']['parameters']['number']
         ot_pay = ot_calculation(monthly_basic_pay)
         response = {
             'fulfillmentText':"Your hourly OT pay should be ${}\n What else would you like to know?".format(ot_pay)
         }
     
-    if data['queryResult']['parameters']['currency-from']:
+    if 'currency-from' in data['queryResult']['parameters']:
         source_currency = data['queryResult']['parameters']['currency-from']
         amount = data['queryResult']['parameters']['amount']
         target_currency = data['queryResult']['parameters']['currency-to']
