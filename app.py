@@ -25,7 +25,7 @@ def index():
 def ot_calculation(monthly_basic_pay):
     hourly_basic_pay = (12 * float(monthly_basic_pay)) / (52 * 44)
     hourly_ot_pay = hourly_basic_pay * 1.5
-    return(hourly_ot_pay)
+    return('{0:.2f}'.format(hourly_ot_pay))
 
 # def fetch_conversion_factor(source,target):
 
