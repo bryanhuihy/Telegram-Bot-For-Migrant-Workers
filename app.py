@@ -1,6 +1,9 @@
 from flask import Flask, request, jsonify
 import requests
 
+#To put in .env file
+API_KEY = 'N68ZMEuCXO8402w65EdHn9LZfVGaWmyR'
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -14,18 +17,17 @@ def index():
         monthly_basic_pay = data['queryResult']['parameters']['number']
         ot_pay = ot_calculation(monthly_basic_pay)
         response = {
-            'fulfillmentText':"Your hourly OT pay should be ${}\n What else would you like to know?".format(ot_pay)
+            'fulfillmentText':"Your hourly OT pay should be ${}\nWhat else would you like to know?".format(ot_pay)
         }
     
     if 'currency-from' in data['queryResult']['parameters']:
         source_currency = data['queryResult']['parameters']['currency-from']
         amount = data['queryResult']['parameters']['amount']
         target_currency = data['queryResult']['parameters']['currency-to']
-        cf = fetch_conversion_factor(source_currency,target_currency)
-        final_amount = amount * cf
-        final_amount = round(final_amount,2)
+        cf = fetch_conversion_factor(source_currency,target_currency, amount)
+        final_amount = round(cf,2)
         response = {
-            'fulfillmentText':"${} {} is ${} {}\n What else would you like to know?".format(amount,source_currency,final_amount,target_currency)
+            'fulfillmentText':"${} {} is ${} {}\nWhat else would you like to know?".format(amount,source_currency,final_amount,target_currency)
         }
     
     return jsonify(response)
@@ -35,14 +37,18 @@ def ot_calculation(monthly_basic_pay):
     hourly_ot_pay = hourly_basic_pay * 1.5
     return('{0:.2f}'.format(hourly_ot_pay))
 
-def fetch_conversion_factor(source,target):
+def fetch_conversion_factor(source, target, amount):
 
-    url = "https://free.currconv.com/api/v7/convert?q={}_{}&compact=ultra&apiKey=9aa0c54f5ad4c460c36d".format(source,target)
+    url = "https://api.apilayer.com/fixer/convert?to={}&from={}&amount={}".format(source, target, amount)
 
-    response = requests.get(url)
-    response = response.json()
+    payload = {}
+    headers= {
+        "apikey": API_KEY
+    }
 
-    return response['{}_{}'.format(source,target)]
+    response = requests.request("GET", url, headers=headers, data = payload)
+
+    return response['result']
 
 if __name__ == "__main__":
     app.run(debug=True)
