@@ -39,7 +39,7 @@ def ot_calculation(monthly_basic_pay):
 
 def fetch_conversion_factor(source, target, amount):
 
-    url = "https://api.apilayer.com/fixer/convert?to={}&from={}&amount={}".format(source, target, amount)
+    url = "https://api.apilayer.com/fixer/convert?to={}&from={}&amount={}".format(target, source, amount)
 
     payload = {}
     headers= {
