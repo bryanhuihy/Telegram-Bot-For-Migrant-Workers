@@ -1,8 +1,9 @@
 Click
 Flask==2.2.2
-gunicorn==19.9.0
+Flask-SQLAchemy
+SQLAchemy
+gunicorn
 itsdangerous
 Jinja2
 MarkupSafe
 Werkzeug
-gevent
