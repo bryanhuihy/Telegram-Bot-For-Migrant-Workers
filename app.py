@@ -47,9 +47,9 @@ def fetch_conversion_factor(source, target, amount):
     }
 
     response = requests.request("GET", url, headers=headers, data = payload)
-    result = response.get_json()
+    print(response.text)
 
-    return result['result']
+    return 
 
 if __name__ == "__main__":
     app.run(debug=True)
