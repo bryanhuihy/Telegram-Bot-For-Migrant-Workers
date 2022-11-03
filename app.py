@@ -5,28 +5,27 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return 'Hello World'
+    return 'I love Prof Andrew'
 
 @app.route('/',methods=['POST'])
 def index():
     data = request.get_json()
-    monthly_basic_pay = data['queryResult']['parameters']['number']
-    source_currency = data['queryResult']['parameters']['currency-from']
-    amount = data['queryResult']['parameters']['amount']
-    target_currency = data['queryResult']['parameters']['currency-to']
-
-    if monthly_basic_pay:
+    if data['queryResult']['parameters']['number']:
+        monthly_basic_pay = data['queryResult']['parameters']['number']
         ot_pay = ot_calculation(monthly_basic_pay)
         response = {
             'fulfillmentText':"Your hourly OT pay should be ${}\n What else would you like to know?".format(ot_pay)
         }
-
-    elif source_currency:
+    
+    if data['queryResult']['parameters']['currency-from']:
+        source_currency = data['queryResult']['parameters']['currency-from']
+        amount = data['queryResult']['parameters']['amount']
+        target_currency = data['queryResult']['parameters']['currency-to']
         cf = fetch_conversion_factor(source_currency,target_currency)
         final_amount = amount * cf
         final_amount = round(final_amount,2)
         response = {
-            'fulfillmentText':"{} {} is {} {}".format(amount,source_currency,final_amount,target_currency)
+            'fulfillmentText':"${} {} is ${} {}\n What else would you like to know?".format(amount,source_currency,final_amount,target_currency)
         }
     
     return jsonify(response)
@@ -44,7 +43,6 @@ def fetch_conversion_factor(source,target):
     response = response.json()
 
     return response['{}_{}'.format(source,target)]
-
 
 if __name__ == "__main__":
     app.run(debug=True)
