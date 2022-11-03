@@ -1,7 +1,7 @@
 Click
 Flask==2.2.2
-Flask-SQLAchemy
-SQLAchemy
+Flask-SQLAlchemy
+SQLAlchemy
 gunicorn
 itsdangerous
 Jinja2
