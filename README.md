@@ -9,3 +9,6 @@ This chatbot integrates with Google Dialogflow and is hosted on Heroku. This bot
 [Telegram Bot](http://t.me/G3T3_bot)
 
 Converter Currency API: [Fixer API](https://apilayer.com/marketplace/fixer-api#documentation-tab)
+
+## Easter Egg (hehe)
+The flask app is hosted on Heroku, you can find the link in the Dialogflow fulfillment webhook! Click into the link for find a pleasant surprise ;)
