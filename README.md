@@ -6,4 +6,6 @@ This is a python script for a telegram bot to help migrant workers to learn abou
 This chatbot integrates with Google Dialogflow and is hosted on Heroku. This bot includes an overtime pay calculator and currency converter.
 
 ## Links
-[Link to the Telegram Bot](http://t.me/G3T3_bot)
+[Telegram Bot](http://t.me/G3T3_bot)
+
+Converter Currency API: [Fixer API](https://apilayer.com/marketplace/fixer-api#documentation-tab)
